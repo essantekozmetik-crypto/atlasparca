@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Yedek Parça – Orijinal & İkinci El</title>
+<meta name="description" content="BMW, Mercedes, Porsche, Maserati yedek parça. Orijinal ve ikinci el."/>
+<meta property="og:type" content="website"/>
+<meta name="robots" content="index, follow"/>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --hdr:#1a1a1a;--hdr2:#242424;--logo-bg:#f7c52d;
+  --accent:#0070f3;--bg:#f0f0f0;--surface:#fff;
+  --border:#ddd;--border2:#e8e8e8;
+  --text:#222;--muted:#666;--muted2:#aaa;
+  --link:#1a56a0;--link-h:#0d3d7a;
+  --wa:#25D366;--red:#c0392b;
+  --font:'Figtree',system-ui,sans-serif;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13px}
+header{background:var(--hdr);border-bottom:2px solid #000;position:sticky;top:0;z-index:200}
+.hdr-inner{display:flex;align-items:center;gap:10px;padding:9px 14px;max-width:1440px;margin:0 auto}
+.logo{background:var(--logo-bg);color:#111;font-weight:700;font-size:14px;padding:6px 12px;border-radius:4px;white-space:nowrap;flex-shrink:0;cursor:pointer;text-decoration:none}
+.search-wrap{flex:1;display:flex}
+.si{flex:1;padding:8px 14px;border:none;outline:none;font:inherit;font-size:13px;background:#fff;border-radius:4px 0 0 4px}
+.si::placeholder{color:#aaa}
+.sbtn{background:var(--logo-bg);border:none;padding:8px 16px;cursor:pointer;border-radius:0 4px 4px 0;font-weight:700;font-size:14px}
+.hdr-r{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.chip{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:4px;border:none;cursor:pointer;font:inherit;font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap}
+.chip-wa{background:var(--wa);color:#fff}.chip-wa:hover{filter:brightness(.9)}
+.chip-tel{background:#2a2a2a;color:#ccc;border:1px solid #444}.chip-tel:hover{color:#fff;background:#383838}
+.subnav{background:var(--hdr2);border-bottom:1px solid #0d0d0d}
+.subnav-in{display:flex;padding:0 14px;max-width:1440px;margin:0 auto;overflow-x:auto;scrollbar-width:none}
+.subnav-in::-webkit-scrollbar{display:none}
+.sn{color:#bbb;font-size:12px;padding:8px 13px;white-space:nowrap;cursor:pointer;border-bottom:2px solid transparent;display:block;background:none;border-left:none;border-right:none;border-top:none;font:inherit}
+.sn:hover,.sn.act{color:#fff;border-bottom-color:var(--logo-bg)}
+
+/* LAYOUT — sidebar her zaman sabit */
+.page{display:flex;max-width:1440px;margin:0 auto}
+aside{width:220px;min-width:220px;background:var(--surface);border-right:1px solid var(--border2)}
+.main{flex:1;min-width:0;padding:12px 14px}
+
+/* SIDEBAR */
+.aside-contact{padding:12px 14px 14px;border-bottom:1px solid var(--border2);background:#f6fff6}
+.ac-title{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:9px}
+.wa-btn{display:flex;align-items:center;gap:7px;width:100%;padding:9px 11px;background:var(--wa);color:#fff;border:none;border-radius:4px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;margin-bottom:6px}
+.wa-btn:hover{filter:brightness(.92)}
+.tel-btn{display:flex;align-items:center;gap:7px;width:100%;padding:8px 11px;background:#fff;color:var(--text);border:1.5px solid var(--border);border-radius:4px;font:inherit;font-size:12px;cursor:pointer;text-decoration:none}
+.tel-btn:hover{border-color:var(--accent);color:var(--accent)}
+.tel-num{font-size:11px;color:var(--muted);text-align:center;margin-top:5px}
+.filter-section{padding:10px 14px;border-bottom:1px solid var(--border2)}
+.fs-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.fs-clear{font-size:10px;color:var(--accent);cursor:pointer}.fs-clear:hover{text-decoration:underline}
+.filter-list{display:flex;flex-direction:column;gap:2px;max-height:180px;overflow-y:auto;scrollbar-width:thin}
+.fl-item{display:flex;align-items:center;justify-content:space-between;padding:4px 6px;cursor:pointer;border-radius:3px;font-size:12px;color:var(--link)}
+.fl-item:hover{background:#f0f5ff;color:var(--link-h)}
+.fl-item.active{background:#e8f0fe;color:var(--link-h);font-weight:600}
+.fl-cnt{font-size:10px;color:var(--muted2)}
+
+/* LİSTE */
+.active-filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.af-tag{display:flex;align-items:center;gap:5px;background:#e8f0fe;color:#1a56a0;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500}
+.af-tag button{background:none;border:none;cursor:pointer;color:#666;font-size:13px;line-height:1;padding:0}
+.bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border2)}
+.bar-title{font-size:13px;font-weight:700}
+.bar-r{display:flex;align-items:center;gap:8px}
+.res{font-size:12px;color:var(--muted)}.res strong{color:var(--text)}
+.sort{font:inherit;font-size:12px;padding:5px 7px;border:1px solid var(--border);border-radius:3px;cursor:pointer;outline:none;background:#fff}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.card{background:#fff;border:1px solid var(--border2);border-radius:3px;overflow:hidden;cursor:pointer;transition:box-shadow .15s,border-color .15s;position:relative}
+.card:hover{box-shadow:0 2px 10px rgba(0,0,0,.12);border-color:#bbb}
+.card-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#eee}
+.card-img-ph{width:100%;aspect-ratio:4/3;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:22px;color:#ccc}
+.card-badge{position:absolute;top:4px;left:4px;background:rgba(0,0,0,.55);color:#fff;font-size:9px;padding:2px 5px;border-radius:2px;pointer-events:none}
+.card-body{padding:5px 6px 8px}
+.card-title{font-size:11px;color:var(--text);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px;font-weight:500}
+.card-price{font-size:12px;font-weight:700;color:var(--red)}
+.card-price .eur{font-size:10px;color:var(--muted);font-weight:400;margin-left:4px}
+.card-sub{font-size:10px;color:var(--muted2);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-adm-btn{position:absolute;top:4px;right:4px;background:rgba(30,30,30,.85);color:#fff;border:none;width:22px;height:22px;border-radius:50%;font-size:14px;cursor:pointer;display:none;align-items:center;justify-content:center;line-height:1;z-index:5;font-weight:700}
+body.admin-on .card-adm-btn{display:flex}
+body.admin-on .card:hover{outline:2px dashed #e85d04}
+body.admin-on .card.pasif-kart{opacity:.35;outline:2px dashed #888}
+/* Toplu seçim checkbox */
+.card-chk{position:absolute;top:4px;left:4px;width:20px;height:20px;accent-color:#e85d04;cursor:pointer;display:none;z-index:6}
+body.admin-on .card-chk{display:block}
+.card.secili{outline:2px solid #e85d04!important;background:#fff8f5}
+.btn-adm-red{background:#dc2626;color:#fff;border:none;padding:7px 14px;border-radius:4px;font:inherit;font-size:12px;cursor:pointer;font-weight:600}
+
+/* İLAN DETAY */
+.ilan-back{display:inline-flex;align-items:center;gap:6px;color:var(--link);font-size:12px;cursor:pointer;margin-bottom:12px;background:none;border:none;font:inherit;padding:0}
+.ilan-back:hover{color:var(--link-h);text-decoration:underline}
+.ilan-breadcrumb{font-size:11px;color:var(--muted);margin-bottom:10px}
+.ilan-breadcrumb a{color:var(--link);text-decoration:none;cursor:pointer}
+.ilan-breadcrumb a:hover{text-decoration:underline}
+.ilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.ilan-galeri{position:relative}
+.ilan-ana-img{width:100%;aspect-ratio:4/3;object-fit:contain;background:#111;border-radius:6px;display:block;cursor:zoom-in}
+.ilan-ana-ph{width:100%;aspect-ratio:4/3;background:#f0f0f0;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:48px;color:#ddd}
+.ilan-thumbs{display:flex;gap:5px;margin-top:7px;overflow-x:auto;scrollbar-width:thin}
+.ilan-thumb{width:56px;height:42px;object-fit:cover;border-radius:3px;cursor:pointer;opacity:.55;border:2px solid transparent;flex-shrink:0;transition:opacity .15s,border-color .15s}
+.ilan-thumb.on,.ilan-thumb:hover{opacity:1;border-color:var(--logo-bg)}
+.ilan-bilgi h1{font-size:16px;font-weight:700;line-height:1.35;margin-bottom:8px}
+.ilan-fiyat{font-size:24px;font-weight:700;color:var(--red);margin-bottom:12px}
+.ilan-fiyat .eur{font-size:14px;font-weight:400;color:var(--muted);margin-left:6px}
+.ilan-tablo{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;padding:10px 0;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);margin-bottom:12px}
+.ilan-tablo .dl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;padding:2px 0}
+.ilan-tablo .dv{font-size:12px;color:var(--text);padding:2px 0;word-break:break-word}
+.ilan-tablo .dv.mono{font-family:monospace;background:#f5f5f5;padding:2px 6px;border-radius:3px;font-size:11px}
+.ilan-aciklama{font-size:12px;color:var(--muted);line-height:1.6;white-space:pre-line;margin-bottom:14px}
+.ilan-actions{display:flex;flex-direction:column;gap:8px}
+.btn-wa-buyuk{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--wa);color:#fff;border:none;padding:13px;border-radius:5px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;width:100%}
+.btn-wa-buyuk:hover{filter:brightness(.92)}
+.btn-ara-buyuk{display:flex;align-items:center;justify-content:center;gap:7px;background:#fff;color:var(--text);border:1.5px solid var(--border);padding:11px;border-radius:5px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;width:100%;text-decoration:none}
+.btn-ara-buyuk:hover{border-color:var(--accent);color:var(--accent)}
+.g-arrow-page{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);color:#fff;border:none;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;line-height:1}
+.g-arrow-page:hover{background:rgba(0,0,0,.85)}
+.g-arrow-page:disabled{opacity:.2;cursor:default}
+.g-prev-page{left:6px}.g-next-page{right:6px}
+
+/* İŞLEM MENÜSÜ */
+.islem-ov{position:fixed;inset:0;z-index:450;display:none;align-items:flex-end;justify-content:center}
+.islem-ov.open{display:flex}
+.islem-bg{position:absolute;inset:0;background:rgba(0,0,0,.4)}
+.islem-menu{position:relative;background:#fff;border-radius:16px 16px 0 0;width:100%;max-width:480px;padding:12px 0 28px;z-index:1}
+.islem-hdr{text-align:center;padding:0 20px 12px;border-bottom:1px solid var(--border2);margin-bottom:8px}
+.islem-hdr .ib{font-size:14px;font-weight:700;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:2px}
+.islem-hdr .ia{font-size:11px;color:var(--muted)}
+.islem-btn{display:flex;align-items:center;gap:14px;width:100%;padding:14px 24px;background:none;border:none;font:inherit;font-size:14px;cursor:pointer;text-align:left}
+.islem-btn:hover{background:#f5f5f5}
+.islem-btn .ii{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.islem-btn .lbl{font-weight:600;display:block;margin-bottom:1px}
+.islem-btn .sub{font-size:11px;color:var(--muted);font-weight:400}
+.idivider{height:1px;background:var(--border2);margin:6px 0}
+
+/* ADMİN BAR */
+.admin-bar{position:fixed;bottom:0;left:0;right:0;z-index:400;background:#1a1a1a;border-top:2px solid #e85d04;padding:10px 16px;display:none;align-items:center;gap:12px}
+.admin-bar.on{display:flex}
+.admin-bar-title{color:#e85d04;font-size:12px;font-weight:700;text-transform:uppercase;white-space:nowrap}
+.admin-bar-info{color:#aaa;font-size:12px;flex:1}
+.admin-bar-info strong{color:#fff}
+.btn-adm{background:#333;color:#ccc;border:1px solid #555;padding:7px 14px;border-radius:4px;font:inherit;font-size:12px;cursor:pointer}
+.btn-adm-grn{background:#16a34a;color:#fff;border:none;padding:7px 14px;border-radius:4px;font:inherit;font-size:12px;cursor:pointer}
+
+/* ŞİFRE */
+.pw-ov{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:600;display:none;align-items:center;justify-content:center}
+.pw-ov.open{display:flex}
+.pw-box{background:#fff;border-radius:8px;padding:28px;width:300px;text-align:center}
+.pw-box h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.pw-box p{font-size:12px;color:#888;margin-bottom:14px}
+.pw-input{width:100%;font:inherit;font-size:14px;padding:9px;border:1.5px solid #ddd;border-radius:5px;outline:none;text-align:center;letter-spacing:2px;margin-bottom:10px}
+.pw-input:focus{border-color:var(--accent)}
+.pw-input.shake{animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pw-err{color:#dc2626;font-size:12px;margin-bottom:8px;display:none}
+.btn-pw{width:100%;background:#1a1a1a;color:#fff;border:none;padding:11px;border-radius:5px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px}
+.btn-pw:hover{background:#333}
+.btn-pw-c{background:none;border:none;color:#aaa;font:inherit;font-size:12px;cursor:pointer}
+
+/* ONAY */
+.onay-ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:700;display:none;align-items:center;justify-content:center;padding:20px}
+.onay-ov.open{display:flex}
+.onay-box{background:#fff;border-radius:10px;padding:24px;width:100%;max-width:340px;text-align:center}
+.onay-box h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.onay-box p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.onay-btns{display:flex;gap:10px}
+.btn-onay-sil{flex:1;background:#dc2626;color:#fff;border:none;padding:11px;border-radius:6px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.btn-onay-iptal{flex:1;background:#f0f0f0;color:var(--text);border:1px solid var(--border);padding:11px;border-radius:6px;font:inherit;font-size:13px;cursor:pointer}
+
+/* LİGHTBOX */
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:500;display:none;align-items:center;justify-content:center}
+.lb.open{display:flex}
+.lb-img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:4px;display:block;user-select:none}
+.lb-arrow{position:fixed;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);color:#fff;border:none;width:52px;height:52px;border-radius:50%;font-size:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;line-height:1}
+.lb-arrow:hover{background:rgba(255,255,255,.28)}
+.lb-arrow:disabled{opacity:.15;cursor:default}
+.lb-prev{left:16px}.lb-next{right:16px}
+.lb-close{position:fixed;top:14px;right:18px;background:rgba(255,255,255,.12);color:#fff;border:none;width:40px;height:40px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10}
+.lb-close:hover{background:rgba(255,255,255,.28)}
+.lb-counter{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.55);color:#fff;font-size:13px;font-weight:600;padding:5px 16px;border-radius:20px;pointer-events:none}
+
+.fwa{position:fixed;bottom:22px;right:22px;z-index:250;background:var(--wa);color:#fff;border:none;width:54px;height:54px;border-radius:50%;cursor:pointer;box-shadow:0 4px 16px rgba(37,211,102,.45);display:flex;align-items:center;justify-content:center}
+.fwa:hover{transform:scale(1.08)}
+body.admin-on .fwa{bottom:70px}
+.empty{text-align:center;padding:60px 20px;color:var(--muted);grid-column:1/-1}
+.empty i{font-size:36px;opacity:.3;display:block;margin-bottom:10px}
+.loading{text-align:center;padding:60px 20px}
+.spin{display:inline-block;width:30px;height:30px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media(max-width:1000px){aside{display:none}.grid{grid-template-columns:repeat(4,1fr)}.ilan-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.grid{grid-template-columns:repeat(3,1fr)}.ilan-tablo{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-inner">
+    <a class="logo" href="/" onclick="geriGit(event)">🔧 Yedek<span style="color:#111">Parça</span></a>
+    <div class="search-wrap">
+      <input class="si" id="si" type="text" placeholder="Marka, model, parça no..." oninput="onSearch(this.value)"/>
+      <button class="sbtn">🔍</button>
+    </div>
+    <div class="hdr-r">
+      <a class="chip chip-wa" href="https://wa.me/905324767606?text=Merhaba!%20Yedek%20parça%20hakkında%20bilgi%20almak%20istiyorum." target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.09.543 4.05 1.49 5.752L0 24l6.394-1.676A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.806-.528-5.4-1.448l-.387-.228-4.02 1.054.97-3.916-.254-.404A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        WhatsApp
+      </a>
+      <a class="chip chip-tel" href="tel:+905324767606">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+        Ara
+      </a>
+    </div>
+  </div>
+  <div class="subnav"><div class="subnav-in" id="subnav"><button class="sn act" onclick="setKat(null,this)">Tüm Parçalar</button></div></div>
+</header>
+
+<!-- TEK LAYOUT — sidebar her zaman görünür, sadece .main değişir -->
+<div class="page">
+  <aside id="sidebar"></aside>
+  <div class="main" id="main">
+    <div class="loading"><div class="spin"></div></div>
+  </div>
+</div>
+
+<!-- Yüzen WA -->
+<button class="fwa" onclick="window.open('https://wa.me/905324767606?text=Merhaba!','_blank')">
+  <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.09.543 4.05 1.49 5.752L0 24l6.394-1.676A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.806-.528-5.4-1.448l-.387-.228-4.02 1.054.97-3.916-.254-.404A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+</button>
+
+<!-- Şifre -->
+<div class="pw-ov" id="pwOv">
+  <div class="pw-box">
+    <h3>🔐 Admin</h3><p>Şifreyi girin</p>
+    <input class="pw-input" id="pwIn" type="password" placeholder="••••••" maxlength="20"
+      onkeydown="if(event.key==='Enter')pwGiris()" autocomplete="off"/>
+    <p class="pw-err" id="pwErr">Yanlış şifre.</p>
+    <button class="btn-pw" onclick="pwGiris()">Giriş</button>
+    <button class="btn-pw-c" onclick="pwKapat()">İptal</button>
+  </div>
+</div>
+
+<!-- İşlem menüsü -->
+<div class="islem-ov" id="islemOv">
+  <div class="islem-bg" onclick="islemKapat()"></div>
+  <div class="islem-menu">
+    <div class="islem-hdr"><div class="ib" id="islemB"></div><div class="ia" id="islemA"></div></div>
+    <button class="islem-btn" id="btnPasif" onclick="islemPasif()">
+      <div class="ii" style="background:#fff3cd">🙈</div>
+      <div><span class="lbl">Pasife Al</span><span class="sub">Gizlenir — geri alınabilir</span></div>
+    </button>
+    <button class="islem-btn" id="btnAktif" onclick="islemAktif()" style="display:none">
+      <div class="ii" style="background:#d4edda">👁</div>
+      <div><span class="lbl">Aktife Al</span><span class="sub">Tekrar görünür olur</span></div>
+    </button>
+    <div class="idivider"></div>
+    <button class="islem-btn" onclick="islemSilOnay()">
+      <div class="ii" style="background:#fde8e8">🗑</div>
+      <div><span class="lbl" style="color:#dc2626">Kalıcı Sil</span><span class="sub">Geri alınamaz</span></div>
+    </button>
+    <div class="idivider"></div>
+    <button class="islem-btn" onclick="islemKapat()">
+      <div class="ii" style="background:#f0f0f0">✕</div>
+      <div><span class="lbl">İptal</span></div>
+    </button>
+  </div>
+</div>
+
+<!-- Onay -->
+<div class="onay-ov" id="onayOv">
+  <div class="onay-box">
+    <h3>⚠️ Kalıcı Silme</h3>
+    <p id="onayMsg"></p>
+    <div class="onay-btns">
+      <button class="btn-onay-sil" onclick="islemSilOnayla()">Evet, Sil</button>
+      <button class="btn-onay-iptal" onclick="document.getElementById('onayOv').classList.remove('open')">İptal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin bar -->
+<div class="admin-bar" id="adminBar">
+  <span class="admin-bar-title">⚙ Admin</span>
+  <span class="admin-bar-info" id="adminInfo"></span>
+  <button class="btn-adm-grn" onclick="hepsiniAktif()">↺ Hepsini Aktif</button>
+  <button class="btn-adm-red" id="btnTopluSil" onclick="topluSilOnayla()" style="display:none">🗑 Seçilenleri Sil (<span id="seciliSayi">0</span>)</button>
+  <button class="btn-adm" onclick="secimTemizle()" id="btnSecimTemizle" style="display:none">✕ Seçimi Temizle</button>
+  <button class="btn-adm" onclick="adminCikis()">Çıkış</button>
+</div>
+
+<!-- Lightbox -->
+<div class="lb" id="lb" onclick="if(event.target.id==='lb')lbClose()">
+  <button class="lb-close" onclick="lbClose()">✕</button>
+  <button class="lb-arrow lb-prev" id="lbPrev" onclick="lbNav(-1)">&#8249;</button>
+  <img class="lb-img" id="lbImg" src="" alt=""/>
+  <button class="lb-arrow lb-next" id="lbNext" onclick="lbNav(1)">&#8250;</button>
+  <div class="lb-counter" id="lbCounter"></div>
+</div>
+
+<script>
+const PHONE     = '905324767606';
+const SUPA_URL  = 'https://cybaucelrqwlrxoouoir.supabase.co';
+const SUPA_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5YmF1Y2VscnF3bHJ4b291b2lyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzODE1MTAsImV4cCI6MjA4OTk1NzUxMH0.nB8CmXYL7ASmGiHeMvzv8BSN2DPZeCRXnsPIDS38ozM';
+const ADMIN_PWD = 'atlas2024';
+const SITE_ADI  = 'LuxCarParts';
+
+let TUMU = [], adminMod = false;
+let filtreMarka = null, filtreKat = null, filtreParca = null;
+let searchQ = '', sortMode = 'newest';
+let seciliId = null;
+let ipIdx = 0, ipImgs = [];
+let lbIdx = 0, lbImgs = [];
+
+const HDR = { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` };
+const $main = () => document.getElementById('main');
+
+// ── ROUTER ────────────────────────────────────────────────────────────────
+function router() {
+  const m = location.pathname.match(/^\/ilan\/(.+)$/);
+  if (m) gosterIlan(decodeURIComponent(m[1]));
+  else   gosterListe();
+}
+
+function navigate(url) { history.pushState({}, '', url); router(); }
+window.addEventListener('popstate', router);
+
+function geriGit(ev) {
+  if (ev) ev.preventDefault();
+  navigate('/');
+}
+
+// ── VERİ ─────────────────────────────────────────────────────────────────
+async function yukle(tumunu) {
+  $main().innerHTML = '<div class="loading"><div class="spin"></div></div>';
+  let tum = [], from = 0;
+  try {
+    while (true) {
+      const f = tumunu ? '' : '&gizli=eq.false';
+      const r = await fetch(
+        `${SUPA_URL}/rest/v1/ilanlar?select=*${f}&order=created_at.desc`,
+        { headers: { ...HDR, 'Range': `${from}-${from+999}` } }
+      );
+      if (!r.ok) throw new Error(await r.text());
+      const d = await r.json();
+      tum = tum.concat(d);
+      if (d.length < 1000) break;
+      from += 1000;
+    }
+    TUMU = tum;
+    renderSidebar();
+    renderSubnav();
+    renderListe();
+  } catch (err) {
+    $main().innerHTML = `<div class="empty"><i>⚠️</i><b>Bağlantı hatası</b><br><span style="font-size:12px">${err.message}</span></div>`;
+  }
+}
+
+async function ilanGetir(id) {
+  const lokal = TUMU.find(i => String(i.id) === String(id));
+  if (lokal) return lokal;
+  try {
+    const r = await fetch(`${SUPA_URL}/rest/v1/ilanlar?id=eq.${encodeURIComponent(id)}&select=*`, { headers: HDR });
+    const d = await r.json();
+    return d[0] || null;
+  } catch { return null; }
+}
+
+// ── SIDEBAR ───────────────────────────────────────────────────────────────
+function renderSidebar() {
+  const gr = TUMU.filter(i => adminMod || !i.gizli);
+  const markalar    = [...new Set(gr.map(i => i.marka).filter(Boolean))].sort();
+  const kategoriler = [...new Set(gr.map(i => i.kategori).filter(Boolean))].sort();
+  const parcalar    = [...new Set(gr.map(i => i.parca).filter(Boolean))].sort();
+  const say = (k, v) => TUMU.filter(i => (adminMod || !i.gizli) && i[k] === v).length;
+
+  document.getElementById('sidebar').innerHTML = `
+  <div class="aside-contact">
+    <div class="ac-title">Bize Ulaşın</div>
+    <button class="wa-btn" onclick="window.open('https://wa.me/${PHONE}?text=Merhaba!','_blank')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.09.543 4.05 1.49 5.752L0 24l6.394-1.676A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.806-.528-5.4-1.448l-.387-.228-4.02 1.054.97-3.916-.254-.404A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      WhatsApp'tan Yaz
+    </button>
+    <a class="tel-btn" href="tel:+905324767606">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+      Hemen Ara
+    </a>
+    <div class="tel-num">0532 476 76 06</div>
+  </div>
+  <div class="filter-section">
+    <div class="fs-title">Marka <span class="fs-clear" onclick="setMarka(null)">Temizle</span></div>
+    <div class="filter-list">${markalar.map(m => `<div class="fl-item${filtreMarka===m?' active':''}" onclick="setMarka('${e(m)}')">${m}<span class="fl-cnt">${say('marka',m)}</span></div>`).join('')}</div>
+  </div>
+  <div class="filter-section">
+    <div class="fs-title">Kategori <span class="fs-clear" onclick="setKat(null,null)">Temizle</span></div>
+    <div class="filter-list">${kategoriler.map(k => `<div class="fl-item${filtreKat===k?' active':''}" onclick="setKat('${e(k)}',null)">${k}<span class="fl-cnt">${say('kategori',k)}</span></div>`).join('')}</div>
+  </div>
+  <div class="filter-section">
+    <div class="fs-title">Parça Tipi <span class="fs-clear" onclick="setParca(null)">Temizle</span></div>
+    <div class="filter-list">${parcalar.map(p => `<div class="fl-item${filtreParca===p?' active':''}" onclick="setParca('${e(p)}')">${p}<span class="fl-cnt">${say('parca',p)}</span></div>`).join('')}</div>
+  </div>`;
+}
+
+function renderSubnav() {
+  const katlar = [...new Set(TUMU.filter(i => adminMod || !i.gizli).map(i => i.kategori).filter(Boolean))].sort();
+  document.getElementById('subnav').innerHTML =
+    `<button class="sn${!filtreKat?' act':''}" onclick="setKat(null,this)">Tüm Parçalar</button>` +
+    katlar.map(k => `<button class="sn${filtreKat===k?' act':''}" onclick="setKat('${e(k)}',this)">${k}</button>`).join('');
+}
+
+// ── LİSTE GÖRÜNÜMÜ ────────────────────────────────────────────────────────
+function gosterListe() {
+  document.title = `Yedek Parça – ${SITE_ADI}`;
+  if (!TUMU.length) { yukle(adminMod); return; }
+  renderSidebar();
+  renderSubnav();
+  renderListe();
+}
+
+function renderListe() {
+  const list = filtered();
+  const gorunen = list.filter(i => !i.gizli).length;
+
+  $main().innerHTML = `
+  <div id="activeFilters" class="active-filters"></div>
+  <div class="bar">
+    <span class="bar-title" id="barTitle">${filtreKat || 'Tüm Parçalar'}</span>
+    <div class="bar-r">
+      <span class="res"><strong>${adminMod ? list.length : gorunen}</strong> parça</span>
+      <select class="sort" onchange="setSort(this.value)">
+        <option value="newest"${sortMode==='newest'?' selected':''}>En Yeni</option>
+        <option value="price-asc"${sortMode==='price-asc'?' selected':''}>Fiyat ↑</option>
+        <option value="price-desc"${sortMode==='price-desc'?' selected':''}>Fiyat ↓</option>
+      </select>
+    </div>
+  </div>
+  <div id="af" class="active-filters"></div>
+  ${list.length === 0
+    ? `<div class="empty"><i>🔍</i>Sonuç bulunamadı</div>`
+    : `<div class="grid">${list.map(p => `
+    <div class="card${p.gizli?' pasif-kart':''}" onclick="navigate('/ilan/${encodeURIComponent(p.id)}')">
+      ${p.ana_gorsel
+        ? `<img class="card-img" src="${p.ana_gorsel}" loading="lazy" onerror="this.outerHTML='<div class=card-img-ph>🔧</div>'">`
+        : `<div class="card-img-ph">🔧</div>`}
+      <div class="card-badge">${p.marka||''}${p.model?' '+p.model:''}</div>
+      <input type="checkbox" class="card-chk" data-id="${e(p.id)}" onclick="chkToggle(event,'${e(p.id)}')">
+      <button class="card-adm-btn" onclick="islemAc('${e(p.id)}',event)">⋯</button>
+      <div class="card-body">
+        <div class="card-title">${p.baslik||p.parca||''}</div>
+        <div class="card-price">${p.fiyat?'₺'+p.fiyat.toLocaleString('tr-TR'):'Sor'}${p.fiyat_eur?`<span class="eur">€${Math.round(p.fiyat_eur).toLocaleString('tr-TR')}</span>`:''}</div>
+        <div class="card-sub">${[p.parca,p.durum,p.parca_no].filter(Boolean).join(' · ')}</div>
+      </div>
+    </div>`).join('')}</div>`
+  }`;
+
+  renderAF();
+}
+
+// ── İLAN DETAY ────────────────────────────────────────────────────────────
+async function gosterIlan(id) {
+  $main().innerHTML = '<div class="loading"><div class="spin"></div></div>';
+
+  const p = await ilanGetir(id);
+  if (!p) {
+    $main().innerHTML = `<div class="empty"><i>🔍</i>İlan bulunamadı.<br><br><button class="ilan-back" onclick="geriGit()">← Geri dön</button></div>`;
+    return;
+  }
+
+  ipImgs = Array.isArray(p.gorseller) && p.gorseller.length ? p.gorseller : (p.ana_gorsel ? [p.ana_gorsel] : []);
+  ipIdx  = 0;
+
+  // SEO
+  const baslik = p.baslik || '';
+  document.title = `${baslik} | ${SITE_ADI}`;
+  setMeta('description', `${p.marka||''} ${p.model||''} ${p.parca||''} ${p.parca_no||''} ₺${(p.fiyat||0).toLocaleString('tr-TR')} — 0532 476 76 06`);
+  setMetaOg('title', `${baslik} | ${SITE_ADI}`);
+  setMetaOg('image', ipImgs[0] || '');
+
+  let fiyatHtml = p.fiyat ? `₺${p.fiyat.toLocaleString('tr-TR')}` : 'Fiyat için arayın';
+  if (p.fiyat_eur) fiyatHtml += `<span class="eur">€${Math.round(p.fiyat_eur).toLocaleString('tr-TR')}</span>`;
+
+  const satirlar = [
+    ['Marka', p.marka], ['Model', p.model], ['Yıl', p.yil],
+    ['Uyumlu', p.uyumlu], ['Yıl Aralığı', p.yil_aralik], ['Durum', p.durum],
+    ['Kategori', p.kategori], ['OEM No', p.parca_no, true], ['Cross No', p.parca_no_ek, true],
+  ].filter(([, v]) => v);
+
+  const thumbsHtml = ipImgs.length > 1
+    ? `<div class="ilan-thumbs">${ipImgs.map((s, i) =>
+        `<img class="ilan-thumb${i===0?' on':''}" src="${s}" onclick="ipGoster(${i})" loading="lazy" onerror="this.style.display='none'">`
+      ).join('')}</div>` : '';
+
+  const aciklama = (p.aciklama || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  $main().innerHTML = `
+  <div class="ilan-breadcrumb">
+    <a onclick="geriGit()">Ana Sayfa</a> › ${p.kategori||''} › ${baslik}
+  </div>
+  <button class="ilan-back" onclick="geriGit()">← Tüm ilanlar</button>
+  <div class="ilan-grid">
+    <div class="ilan-galeri">
+      <div style="position:relative" id="ip-wrap">
+        <div id="ip-img"></div>
+        <button class="g-arrow-page g-prev-page" id="ip-prev" onclick="ipGoster(ipIdx-1)">&#8249;</button>
+        <button class="g-arrow-page g-next-page" id="ip-next" onclick="ipGoster(ipIdx+1)">&#8250;</button>
+      </div>
+      ${thumbsHtml}
+    </div>
+    <div class="ilan-bilgi">
+      <h1>${baslik}</h1>
+      <div class="ilan-fiyat">${fiyatHtml}</div>
+      <div class="ilan-tablo">${satirlar.map(([l,v,m]) => `<div class="dl">${l}</div><div class="dv${m?' mono':''}">${v}</div>`).join('')}</div>
+      <div class="ilan-aciklama">${aciklama}</div>
+      <div class="ilan-actions">
+        <button class="btn-wa-buyuk" id="ip-wa">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.09.543 4.05 1.49 5.752L0 24l6.394-1.676A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.806-.528-5.4-1.448l-.387-.228-4.02 1.054.97-3.916-.254-.404A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          WhatsApp ile Satın Al
+        </button>
+        <a class="btn-ara-buyuk" href="tel:+905324767606">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+          0532 476 76 06
+        </a>
+      </div>
+    </div>
+  </div>`;
+
+  ipGoster(0);
+
+  const msg = encodeURIComponent(`Merhaba! "${baslik}" parçasını satın almak istiyorum.${p.parca_no?' (OEM: '+p.parca_no+')':''}${p.fiyat?' ₺'+p.fiyat.toLocaleString('tr-TR'):''}`);
+  document.getElementById('ip-wa').onclick = () => window.open(`https://wa.me/${PHONE}?text=${msg}`, '_blank');
+
+  const wrap = document.getElementById('ip-wrap');
+  if (wrap) addSwipe(wrap, () => ipGoster(ipIdx-1), () => ipGoster(ipIdx+1));
+
+  window.scrollTo(0, 0);
+}
+
+function ipGoster(idx) {
+  ipIdx = Math.max(0, Math.min(idx, ipImgs.length - 1));
+  const src = ipImgs[ipIdx];
+  const el = document.getElementById('ip-img');
+  if (!el) return;
+  el.innerHTML = src
+    ? `<img class="ilan-ana-img" src="${src}" onclick="lbAc(ipIdx,ipImgs)" alt="Görsel">`
+    : `<div class="ilan-ana-ph">🔧</div>`;
+  const prev = document.getElementById('ip-prev');
+  const next = document.getElementById('ip-next');
+  if (prev) prev.disabled = ipIdx === 0;
+  if (next) next.disabled = ipIdx === ipImgs.length - 1;
+  document.querySelectorAll('.ilan-thumb').forEach((t, i) => t.classList.toggle('on', i === ipIdx));
+  document.querySelectorAll('.ilan-thumb')[ipIdx]?.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+}
+
+// ── FİLTRE ────────────────────────────────────────────────────────────────
+function filtered() {
+  let list = TUMU.filter(i => adminMod || !i.gizli);
+  if (filtreMarka) list = list.filter(i => i.marka === filtreMarka);
+  if (filtreKat)   list = list.filter(i => i.kategori === filtreKat);
+  if (filtreParca) list = list.filter(i => i.parca === filtreParca);
+  if (searchQ) {
+    const q = searchQ.toLowerCase();
+    list = list.filter(i =>
+      (i.baslik||'').toLowerCase().includes(q) ||
+      (i.marka||'').toLowerCase().includes(q) ||
+      (i.model||'').toLowerCase().includes(q) ||
+      (i.parca||'').toLowerCase().includes(q) ||
+      (i.parca_no||'').toLowerCase().includes(q) ||
+      (i.parca_no_ek||'').toLowerCase().includes(q) ||
+      (i.uyumlu||'').toLowerCase().includes(q) ||
+      (i.aciklama||'').toLowerCase().includes(q)
+    );
+  }
+  if (sortMode === 'price-asc')  list.sort((a, b) => a.fiyat - b.fiyat);
+  if (sortMode === 'price-desc') list.sort((a, b) => b.fiyat - a.fiyat);
+  return list;
+}
+
+function setMarka(v)  { filtreMarka=v; renderSidebar(); renderAF(); renderListe(); }
+function setParca(v)  { filtreParca=v; renderSidebar(); renderAF(); renderListe(); }
+function onSearch(v)  { searchQ=v; renderAF(); renderListe(); }
+function setSort(v)   { sortMode=v; renderListe(); }
+
+function setKat(v, el) {
+  filtreKat = v;
+  document.querySelectorAll('.sn').forEach(x => x.classList.remove('act'));
+  if (el) el.classList.add('act');
+  else document.querySelector('.sn')?.classList.add('act');
+  renderSidebar(); renderAF(); renderListe();
+}
+
+function renderAF() {
+  const el = document.getElementById('af');
+  if (!el) return;
+  const t = [];
+  if (filtreMarka) t.push([`Marka: ${filtreMarka}`, () => setMarka(null)]);
+  if (filtreKat)   t.push([`Kategori: ${filtreKat}`, () => setKat(null, null)]);
+  if (filtreParca) t.push([`Parça: ${filtreParca}`, () => setParca(null)]);
+  if (searchQ)     t.push([`"${searchQ}"`, () => { searchQ=''; document.getElementById('si').value=''; renderAF(); renderListe(); }]);
+  el.innerHTML = t.map(([l], i) => `<span class="af-tag">${l}<button onclick="afC(${i})">×</button></span>`).join('');
+  window._af = t.map(([, fn]) => fn);
+}
+function afC(i) { window._af[i](); }
+
+// ── ADMİN ────────────────────────────────────────────────────────────────
+function adminAc() { document.getElementById('pwOv').classList.add('open'); setTimeout(()=>document.getElementById('pwIn').focus(),100); }
+function pwKapat() { document.getElementById('pwOv').classList.remove('open'); document.getElementById('pwIn').value=''; document.getElementById('pwErr').style.display='none'; }
+function pwGiris() {
+  if (document.getElementById('pwIn').value === ADMIN_PWD) { pwKapat(); adminBaslat(); }
+  else { document.getElementById('pwErr').style.display='block'; const i=document.getElementById('pwIn'); i.classList.add('shake'); i.value=''; setTimeout(()=>i.classList.remove('shake'),400); }
+}
+function adminBaslat() { adminMod=true; document.body.classList.add('admin-on'); document.getElementById('adminBar').classList.add('on'); yukle(true); }
+function adminCikis()  { adminMod=false; document.body.classList.remove('admin-on'); document.getElementById('adminBar').classList.remove('on'); yukle(false); }
+function adminBilgi()  { const g=TUMU.filter(i=>i.gizli).length; document.getElementById('adminInfo').innerHTML=`<strong>${TUMU.length-g}</strong> aktif · <strong>${g}</strong> pasif`; }
+
+function islemAc(id, ev) {
+  ev.stopPropagation(); seciliId=id;
+  const p = TUMU.find(i => String(i.id)===String(id)); if (!p) return;
+  document.getElementById('islemB').textContent = p.baslik||p.parca||id;
+  document.getElementById('islemA').textContent = [p.marka,p.model,p.parca_no].filter(Boolean).join(' · ');
+  document.getElementById('btnPasif').style.display = p.gizli ? 'none' : 'flex';
+  document.getElementById('btnAktif').style.display = p.gizli ? 'flex' : 'none';
+  document.getElementById('islemOv').classList.add('open');
+}
+function islemKapat() { document.getElementById('islemOv').classList.remove('open'); seciliId=null; }
+
+async function supaGuncelle(id, data) {
+  await fetch(`${SUPA_URL}/rest/v1/ilanlar?id=eq.${encodeURIComponent(id)}`, {
+    method: 'PATCH', headers: { ...HDR, 'Content-Type':'application/json', 'Prefer':'return=minimal' }, body: JSON.stringify(data)
+  });
+}
+async function islemPasif() { islemKapat(); const p=TUMU.find(i=>String(i.id)===String(seciliId)); if(!p)return; p.gizli=true; await supaGuncelle(seciliId,{gizli:true}); adminBilgi(); renderSidebar(); renderListe(); }
+async function islemAktif() { islemKapat(); const p=TUMU.find(i=>String(i.id)===String(seciliId)); if(!p)return; p.gizli=false; await supaGuncelle(seciliId,{gizli:false}); adminBilgi(); renderSidebar(); renderListe(); }
+function islemSilOnay() {
+  const p = TUMU.find(i=>String(i.id)===String(seciliId));
+  document.getElementById('onayMsg').textContent = `"${p?.baslik||seciliId}" kalıcı silinecek. Geri alınamaz.`;
+  document.getElementById('islemOv').classList.remove('open');
+  document.getElementById('onayOv').classList.add('open');
+}
+async function islemSilOnayla() {
+  document.getElementById('onayOv').classList.remove('open'); if (!seciliId) return;
+  await fetch(`${SUPA_URL}/rest/v1/ilanlar?id=eq.${encodeURIComponent(seciliId)}`, { method:'DELETE', headers:{...HDR,'Prefer':'return=minimal'} });
+  TUMU = TUMU.filter(i => String(i.id) !== String(seciliId));
+  adminBilgi(); renderSidebar(); renderListe(); seciliId=null;
+}
+
+// ── Toplu seçim ──────────────────────────────────────────────────────────
+let seciliIdler = new Set();
+
+function chkToggle(ev, id) {
+  ev.stopPropagation();
+  if (ev.target.checked) seciliIdler.add(id);
+  else seciliIdler.delete(id);
+  secimGuncelle();
+}
+
+function secimGuncelle() {
+  const n = seciliIdler.size;
+  document.getElementById('seciliSayi').textContent = n;
+  document.getElementById('btnTopluSil').style.display = n > 0 ? '' : 'none';
+  document.getElementById('btnSecimTemizle').style.display = n > 0 ? '' : 'none';
+  // Kartların seçili görünümünü güncelle
+  document.querySelectorAll('.card-chk').forEach(chk => {
+    chk.closest('.card').classList.toggle('secili', seciliIdler.has(chk.dataset.id));
+  });
+}
+
+function secimTemizle() {
+  seciliIdler.clear();
+  document.querySelectorAll('.card-chk').forEach(chk => { chk.checked = false; });
+  secimGuncelle();
+}
+
+async function topluSilOnayla() {
+  const n = seciliIdler.size;
+  if (!n) return;
+  if (!confirm(`${n} ilan kalıcı silinecek. Geri alınamaz. Devam?`)) return;
+  const idler = [...seciliIdler];
+  for (const id of idler) {
+    await fetch(`${SUPA_URL}/rest/v1/ilanlar?id=eq.${encodeURIComponent(id)}`, { method:'DELETE', headers:{...HDR,'Prefer':'return=minimal'} });
+    TUMU = TUMU.filter(i => String(i.id) !== String(id));
+  }
+  seciliIdler.clear();
+  secimGuncelle();
+  adminBilgi(); renderSidebar(); renderListe();
+}
+async function hepsiniAktif() {
+  const g = TUMU.filter(i => i.gizli); if (!g.length) { alert('Pasif ilan yok.'); return; }
+  if (!confirm(`${g.length} ilan aktif olacak. Devam?`)) return;
+  for (const p of g) { p.gizli=false; await supaGuncelle(p.id,{gizli:false}); }
+  adminBilgi(); renderListe();
+}
+
+// Logo 5× tıkla → admin
+let lTik=0, lT;
+document.querySelector('.logo').addEventListener('click', () => {
+  lTik++; clearTimeout(lT);
+  if (lTik>=5) { lTik=0; adminMod ? adminCikis() : adminAc(); }
+  else lT = setTimeout(()=>lTik=0, 1500);
+});
+
+// ── LİGHTBOX ─────────────────────────────────────────────────────────────
+function lbAc(idx, imgs) { lbImgs=imgs; lbIdx=idx; lbRender(); document.getElementById('lb').classList.add('open'); }
+function lbRender() {
+  lbIdx = Math.max(0, Math.min(lbIdx, lbImgs.length-1));
+  document.getElementById('lbImg').src = lbImgs[lbIdx] || '';
+  document.getElementById('lbPrev').disabled = lbIdx===0;
+  document.getElementById('lbNext').disabled = lbIdx===lbImgs.length-1;
+  document.getElementById('lbCounter').textContent = lbImgs.length>1 ? `${lbIdx+1} / ${lbImgs.length}` : '';
+}
+function lbNav(d) { lbIdx+=d; lbRender(); }
+function lbClose() { document.getElementById('lb').classList.remove('open'); }
+
+document.addEventListener('keydown', ev => {
+  const lb = document.getElementById('lb').classList.contains('open');
+  if (ev.key==='Escape') { if(lb) lbClose(); return; }
+  if (lb) { if(ev.key==='ArrowLeft') lbNav(-1); if(ev.key==='ArrowRight') lbNav(1); }
+  else    { if(ev.key==='ArrowLeft') ipGoster(ipIdx-1); if(ev.key==='ArrowRight') ipGoster(ipIdx+1); }
+});
+
+let tX = null;
+function addSwipe(el, fnL, fnR) {
+  el.addEventListener('touchstart', ev => { tX=ev.touches[0].clientX; }, {passive:true});
+  el.addEventListener('touchend',   ev => {
+    if (tX===null) return;
+    const d = tX - ev.changedTouches[0].clientX;
+    if (Math.abs(d) > 40) d>0 ? fnR() : fnL();
+    tX = null;
+  }, {passive:true});
+}
+addSwipe(document.getElementById('lb'), ()=>lbNav(-1), ()=>lbNav(1));
+
+// ── META ──────────────────────────────────────────────────────────────────
+function setMeta(name, content) {
+  let el = document.querySelector(`meta[name="${name}"]`);
+  if (!el) { el=document.createElement('meta'); el.name=name; document.head.appendChild(el); }
+  el.content = content;
+}
+function setMetaOg(prop, content) {
+  let el = document.querySelector(`meta[property="og:${prop}"]`);
+  if (!el) { el=document.createElement('meta'); el.setAttribute('property','og:'+prop); document.head.appendChild(el); }
+  el.content = content;
+}
+function e(s) { return String(s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
+
+// ── BAŞLAT ────────────────────────────────────────────────────────────────
+yukle(false).then(() => router());
+</script>
+</body>
+</html>
